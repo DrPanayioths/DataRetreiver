@@ -4,6 +4,8 @@ import random
 import psutil
 from supabase import create_client, Client
 import ctypes
+import string
+import secrets
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -21,22 +23,24 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f}{unit}{suffix}"
         bytes /= factor
 
-random_number = random.randrange(0,9999)
+random_number = random.randrange(0,99999)
 platdata = platform.uname()
 ram = psutil.virtual_memory()
 random_str = str(random_number)
+password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.ascii_lowercase) + secrets.choice(string.ascii_letters) + str(random.randrange(0,9999))
 
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     try:
         count = supabase.table('helper_data') \
-            .insert({"id": random_number, "OperatingSYS": platdata.system, "DeviceName": platdata.node, "WindowsVersion": platdata.release, "CPU_DATA": platdata.processor, "Ram_Total": get_size(ram.total), "Ram_Used": get_size(ram.used), }) \
+            .insert({"id": random_number, "security_code": password_final , "OperatingSYS": platdata.system, "DeviceName": platdata.node, "WindowsVersion": platdata.release, "CPU_DATA": platdata.processor, "Ram_Total": get_size(ram.total), "Ram_Used": get_size(ram.used), }) \
             .execute()
-        print("="*40, "Provide Code To The Helper", "="*40)
+        print("="*40, "Provide Those To The Helper", "="*40)
         print("Database Entry Code: " + random_str)
+        print("Data Access Key: " + password_final)
         print("") 
-        ctypes.windll.user32.MessageBoxW(0, "Data Status: Succesful Transfer", "DRP Data Transferer", 1)
+        ctypes.windll.user32.MessageBoxW(0, "Data Status: Successful Transfer", "DRP Data Transferer", 1)
     except Exception as e:
-        print("Error:", e)
+        ctypes.windll.user32.MessageBoxW(0, "Data Status: Unsuccessful Transfer", "DRP Data Transferer", 1)
 else:
     print("You Decline The Transfer, Program Will Close In 5")
     time.sleep(1)
