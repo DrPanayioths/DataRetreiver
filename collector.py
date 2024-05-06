@@ -6,10 +6,12 @@ from supabase import create_client, Client
 import ctypes
 import string
 import secrets
+import os
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
 supabase: Client = create_client(url, key)
+os.system('color a')
 print("(Computer) Data Sender Provided By DrPanayioths")
 print("")
 
@@ -38,9 +40,9 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
         print("Database Entry Code: " + random_str)
         print("Data Access Key: " + password_final)
         print("") 
-        ctypes.windll.user32.MessageBoxW(0, "Data Status: Successful Transfer", "DRP Data Transferer", 1)
+        ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Successful Transfer", "DRP Data Transferer", 0x40)
     except Exception as e:
-        ctypes.windll.user32.MessageBoxW(0, "Data Status: Unsuccessful Transfer", "DRP Data Transferer", 1)
+        ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
 else:
     print("You Decline The Transfer, Program Will Close In 5")
     time.sleep(1)
