@@ -7,6 +7,7 @@ import ctypes
 import string
 import secrets
 import os
+import requests
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -17,6 +18,15 @@ print("")
 
 data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To DrPanayioths Database: ")
 print("")
+
+def get_country():
+    try:
+        response = requests.get('http://ip-api.com/json/')
+        data = response.json()
+        country = data.get('country')
+        return country
+    except Exception as e:
+        return None
 
 def get_size(bytes, suffix="B"):
     factor = 1024
@@ -30,11 +40,13 @@ platdata = platform.uname()
 ram = psutil.virtual_memory()
 random_str = str(random_number)
 password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.ascii_lowercase) + secrets.choice(string.ascii_letters) + str(random.randrange(0,9999))
+country = get_country()
 
+# Main Coding System
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     try:
         count = supabase.table('helper_data') \
-            .insert({"id": random_number, "security_code": password_final , "OperatingSYS": platdata.system, "DeviceName": platdata.node, "WindowsVersion": platdata.release, "CPU_DATA": platdata.processor, "Ram_Total": get_size(ram.total), "Ram_Used": get_size(ram.used), }) \
+            .insert({"id": random_number, "security_code": password_final , "OperatingSYS": platdata.system, "DeviceName": platdata.node, "WindowsVersion": platdata.release, "CPU_DATA": platdata.processor, "Ram_Total": get_size(ram.total), "Ram_Used": get_size(ram.used), "Country": country }) \
             .execute()
         print("="*40, "Provide Those To The Helper", "="*40)
         print("Database Entry Code: " + random_str)
