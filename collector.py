@@ -10,15 +10,14 @@ import os
 import requests
 
 
-url: str = "Supabase URL"
-key: str = "Supabase API Key"
+
 supabase: Client = create_client(url, key)
 os.system('color a')
 print("="*80)
 print("(Computer) Data Sender Provided By DrPanayioths")
 print("="*80)
 
-data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To DrPanayioths Database: ")
+data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To The Database Of The Helper: ")
 print("")
 
 def get_country():
@@ -45,16 +44,49 @@ random_str = str(random_number)
 password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.ascii_lowercase) + secrets.choice(string.ascii_letters) + str(random.randrange(0,9999))
 country , isp = get_country()
 
+
+
+
+
 # Main Coding System
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     try:
+        # Database Sender
+        url: str = "Supabase URL"
+        key: str = "Supabase API Key"
         count = supabase.table('helper_data') \
-            .insert({"id": random_number, "security_code": password_final , "OperatingSYS": platdata.system, "DeviceName": platdata.node, "WindowsVersion": platdata.release, "CPU_DATA": platdata.processor, "Ram_Total": get_size(ram.total), "Ram_Used": get_size(ram.used), "Country": country, "ISP": isp }) \
-            .execute()
+.insert({
+    "id": random_number,
+    "security_code": password_final,
+    "OperatingSYS": platdata.system,
+    "DeviceName": platdata.node,
+    "WindowsVersion": platdata.release,
+    "CPU_DATA": platdata.processor,
+    "Ram_Total": get_size(ram.total),
+    "Ram_Used": get_size(ram.used),
+    "Country": country,
+    "ISP": isp
+})            .execute()
         print("="*40, "Provide Those To The Helper", "="*40)
         print("Database Entry Code: " + random_str)
         print("Data Access Key: " + password_final)
         print("") 
+        
+        # Discord Data Webhook Sender (Enable it By Removing the ''' and ''')
+        '''
+        webhook_url = "Replace With Your Webhook URL"
+        data_packet = {
+            "content": f"**Device Name**: {platdata.node}\n"
+                       f"**Operating System**: {platdata.system}\n"
+                       f"**Windows Version**: {platdata.release}\n"
+                       f"**CPU**: {platdata.processor}\n"
+                       f"**Ram Total Capacity**: {get_size(ram.total)}\n"
+                       f"**Ram Used**: {get_size(ram.used)}\n"
+                       f"**Country**: {country}\n"
+                       f"**ISP**: {isp}"
+}
+        requests.post(webhook_url, json = data_packet,)
+        '''
         ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Successful Transfer", "DRP Data Transferer", 0x40)
     except Exception as e:
         ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
