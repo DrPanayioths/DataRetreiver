@@ -15,6 +15,7 @@ supabase: Client = create_client(url, key)
 os.system('color a')
 print("="*80)
 print("(Computer) Data Sender Provided By DrPanayioths")
+print("Support's: Database / Discord")
 print("="*80)
 
 data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To The Database Of The Helper: ")
