@@ -15,10 +15,9 @@ key: str = "Supabase API Key"
 
 supabase: Client = create_client(url, key)
 os.system('color a')
-print("="*80)
-print("(Computer) Data Sender Provided By DrPanayioths")
-print("Support's: Database / Discord")
-print("="*80)
+print("="*83)
+print("(Computer) Data Sender Provided By DrPanayioths       Supports: Database / Discord")
+print("="*83)
 
 data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To The Database Of The Helper: ")
 print("")
@@ -90,7 +89,7 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                        f"**Country**: {country}\n"
                        f"**ISP**: {isp}\n"
                        f"**Date**: {date_now}\n"
-                       f"**Date**: {time_now}"
+                       f"**Time**: {time_now}"
 }
         requests.post(webhook_url, json = data_packet,)
         '''
