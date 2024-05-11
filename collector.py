@@ -3,13 +3,15 @@ import platform
 import random
 import psutil
 from supabase import create_client, Client
+from datetime import datetime
 import ctypes
 import string
 import secrets
 import os
 import requests
 
-
+url: str = "Supabase URL"
+key: str = "Supabase API Key"
 
 supabase: Client = create_client(url, key)
 os.system('color a')
@@ -44,6 +46,8 @@ ram = psutil.virtual_memory()
 random_str = str(random_number)
 password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.ascii_lowercase) + secrets.choice(string.ascii_letters) + str(random.randrange(0,9999))
 country , isp = get_country()
+date_now = datetime.now().strftime('%d-%m-%Y ')
+time_now = datetime.now().strftime('%H:%M:%S')
 
 
 
@@ -53,8 +57,6 @@ country , isp = get_country()
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     try:
         # Database Sender
-        url: str = "Supabase URL"
-        key: str = "Supabase API Key"
         count = supabase.table('helper_data') \
 .insert({
     "id": random_number,
@@ -66,7 +68,9 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     "Ram_Total": get_size(ram.total),
     "Ram_Used": get_size(ram.used),
     "Country": country,
-    "ISP": isp
+    "ISP": isp,
+    "Date": date_now,
+    "Time": time_now
 })            .execute()
         print("="*40, "Provide Those To The Helper", "="*40)
         print("Database Entry Code: " + random_str)
@@ -84,7 +88,9 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                        f"**Ram Total Capacity**: {get_size(ram.total)}\n"
                        f"**Ram Used**: {get_size(ram.used)}\n"
                        f"**Country**: {country}\n"
-                       f"**ISP**: {isp}"
+                       f"**ISP**: {isp}\n"
+                       f"**Date**: {date_now}\n"
+                       f"**Date**: {time_now}"
 }
         requests.post(webhook_url, json = data_packet,)
         '''
