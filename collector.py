@@ -9,6 +9,7 @@ import string
 import secrets
 import os
 import requests
+import ping3
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -47,7 +48,7 @@ password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.
 country , isp = get_country()
 date_now = datetime.now().strftime('%d-%m-%Y ')
 time_now = datetime.now().strftime('%H:%M:%S')
-
+ping_time = round(ping3.ping("google.com") * 1000, 2)
 
 
 
@@ -69,7 +70,8 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     "Country": country,
     "ISP": isp,
     "Date": date_now,
-    "Time": time_now
+    "Time": time_now,
+    "Ping": ping_time
 })            .execute()
         print("="*40, "Provide Those To The Helper", "="*40)
         print("Database Entry Code: " + random_str)
@@ -89,11 +91,11 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                        f"**Country**: {country}\n"
                        f"**ISP**: {isp}\n"
                        f"**Date**: {date_now}\n"
-                       f"**Time**: {time_now}"
+                       f"**Time**: {time_now}\n"
+                       f"**Ping**: {ping_time}"
 }
         requests.post(webhook_url, json = data_packet,)
         '''
-        ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Successful Transfer", "DRP Data Transferer", 0x40)
     except Exception as e:
         ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
 else:
