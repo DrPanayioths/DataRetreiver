@@ -96,15 +96,14 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
 
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
-            print("Error:", e)
     else:
-        print("Transfer Canceled by Anti-Spam System")
+        print("Data Transfer: Canceled by Anti-Spam System")
         print("")
         time.sleep(2)
         exit()
 else:
-    print("You Declined The Transfer, Transfer Application Terminate In 5")
+    print("Data Transfer: Declined By User")
     for i in range(5, 0, -1):
-        print(f"Transfer Application Terminate In {i}")
+        print(f"Transfer System Terminate In {i}")
         time.sleep(1)
     exit()
