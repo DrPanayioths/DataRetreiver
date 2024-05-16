@@ -50,68 +50,61 @@ date_now = datetime.now().strftime('%d-%m-%Y ')
 time_now = datetime.now().strftime('%H:%M:%S')
 ping_time = round(ping3.ping("google.com") * 1000, 2)
 
-
+random_antispam_1 = random.randrange(0,30)
+random_antispam_2 = random.randrange(0,20)
+random_total = random_antispam_1 + random_antispam_2
+random_conv = str(random_total)
 
 
 # Main Coding System
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
-    try:
-        # Database Sender
-        count = supabase.table('helper_data') \
-.insert({
-    "id": random_number,
-    "security_code": password_final,
-    "OperatingSYS": platdata.system,
-    "DeviceName": platdata.node,
-    "WindowsVersion": platdata.release,
-    "CPU_DATA": platdata.processor,
-    "Ram_Total": get_size(ram.total),
-    "Ram_Used": get_size(ram.used),
-    "Country": country,
-    "ISP": isp,
-    "Date": date_now,
-    "Time": time_now,
-    "Ping": ping_time
-})            .execute()
-        print("="*40, "Provide Those To The Helper", "="*40)
-        print("Database Entry Code: " + random_str)
-        print("Data Access Key: " + password_final)
-        print("") 
-        
-        # Discord Data Webhook Sender (Enable it By Removing the ''' and ''')
-        '''
-        webhook_url = "Replace With Your Webhook URL"
-        data_packet = {
-            "content": f"**Device Name**: {platdata.node}\n"
-                       f"**Operating System**: {platdata.system}\n"
-                       f"**Windows Version**: {platdata.release}\n"
-                       f"**CPU**: {platdata.processor}\n"
-                       f"**Ram Total Capacity**: {get_size(ram.total)}\n"
-                       f"**Ram Used**: {get_size(ram.used)}\n"
-                       f"**Country**: {country}\n"
-                       f"**ISP**: {isp}\n"
-                       f"**Date**: {date_now}\n"
-                       f"**Time**: {time_now}\n"
-                       f"**Ping**: {ping_time}"
-}
-        requests.post(webhook_url, json = data_packet,)
-        '''
-    except Exception as e:
-        ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
+    # Anti-Spam Check
+    antispam_check = input("What " + str(random_antispam_1) + " + " + str(random_antispam_2) + " Making (For Verification Reasons): ")
+    print("")
+    if random_conv == antispam_check:
+        try:
+            # Send data to database using Supabase
+            count = supabase.table('helper_data') \
+                .insert({
+                    "id": random_number,
+                    "security_code": password_final,
+                    "OperatingSYS": platdata.system,
+                    "DeviceName": platdata.node,
+                    "WindowsVersion": platdata.release,
+                    "CPU_DATA": platdata.processor,
+                    "Ram_Total": get_size(ram.total),
+                    "Ram_Used": get_size(ram.used),
+                    "Country": country,
+                    "ISP": isp,
+                    "Date": date_now,
+                    "Time": time_now,
+                    "Ping": ping_time
+                }) \
+                .execute()
+
+            print("=" * 40, "Give Those information's To The Helper", "=" * 40)
+            print("Database Entry Code:", random_str)
+            print("Data Access Key:", password_final)
+            print("")
+
+            # Send data to Discord webhook
+            # webhook_url = "https://discord.com/api/webhooks/..."
+            # data_packet = {
+            #     "content": f"**Device Name**: {platdata.node}\n"
+            # }
+            # requests.post(webhook_url, json=data_packet)
+
+        except Exception as e:
+            ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
+            print("Error:", e)
+    else:
+        print("Transfer Canceled by Anti-Spam System")
+        print("")
+        time.sleep(2)
+        exit()
 else:
-    print("You Decline The Transfer, Program Will Close In 5")
-    time.sleep(1)
-    print("Program Close In 4")
-    time.sleep(1)
-    print("Program Close In 3")
-    time.sleep(1)
-    print("Program Close In 2")
-    time.sleep(1)
-    print("Program Close In 1")
-    time.sleep(1)
+    print("You Declined The Transfer, Transfer Application Terminate In 5")
+    for i in range(5, 0, -1):
+        print(f"Transfer Application Terminate In {i}")
+        time.sleep(1)
     exit()
-
-
-
-
-
