@@ -1,0 +1,4 @@
+psutil
+supabase
+requests
+ping3

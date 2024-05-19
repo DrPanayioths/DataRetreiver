@@ -10,6 +10,7 @@ import secrets
 import os
 import requests
 import ping3
+import subprocess
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -104,6 +105,6 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
 else:
     print("Data Transfer: Declined By User")
     for i in range(5, 0, -1):
-        print(f"Transfer System Terminate In {i}")
+        print(f"Transfer System Termination In {i}")
         time.sleep(1)
     exit()
