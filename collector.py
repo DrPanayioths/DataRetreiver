@@ -55,6 +55,8 @@ random_antispam_1 = random.randrange(0,30)
 random_antispam_2 = random.randrange(0,20)
 random_total = random_antispam_1 + random_antispam_2
 random_conv = str(random_total)
+total_storage = round(sum(psutil.disk_usage(p.mountpoint).total for p in psutil.disk_partitions()) / (1024**3), 2) 
+total_final = str(total_storage) + " GB"
 
 
 # Main Coding System
@@ -79,6 +81,7 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                     "ISP": isp,
                     "Date": date_now,
                     "Time": time_now,
+                    "Total_Storage": total_final,
                     "Ping": ping_time
                 }) \
                 .execute()
@@ -88,12 +91,23 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
             print("Data Access Key:", password_final)
             print("")
 
-            # Send data to Discord webhook
-            # webhook_url = "https://discord.com/api/webhooks/..."
-            # data_packet = {
-            #     "content": f"**Device Name**: {platdata.node}\n"
-            # }
-            # requests.post(webhook_url, json=data_packet)
+                      # Send data to Discord webhook
+          #  webhook_url = "https://discord.com/api/webhooks/..."
+          #  data_packet = {
+          #       "content": f"**Device Name**: {platdata.node}\n"
+          #                  f"**Ram Total Capacity**: {get_size(ram.total)}\n"
+          #                  f"**Ram Used**: {get_size(ram.used)}\n"
+          #                  f"**Country**: {country}\n"
+          #                  f"**Operating System**: {platdata.system}\n"
+          #                  f"**Device Name**: {platdata.node}\n"
+          #                  f"**WindowsVersion**: {platdata.release}\n"
+          #                  f"**CPU information's**: {platdata.processor}\n"
+          #                  f"**ISP**: {isp}\n"
+          #                  f"**Date**: {date_now}\n"
+          #                  f"**Time**: {time_now}\n"
+          #                  f"**Ping**: {ping_time}"  
+          #   }
+          #  requests.post(webhook_url, json=data_packet)
 
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
