@@ -10,7 +10,6 @@ import secrets
 import os
 import requests
 import ping3
-import subprocess
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -57,12 +56,7 @@ random_total = random_antispam_1 + random_antispam_2
 random_conv = str(random_total)
 total_storage = round(sum(psutil.disk_usage(p.mountpoint).total for p in psutil.disk_partitions()) / (1024**3), 2) 
 total_final = str(total_storage) + " GB"
-subprocess_windows = subprocess.run(['slmgr', '/xpr'], capture_output=True, text=True, shell=True)
-subprocess_result = subprocess_windows.stdout
-if "The machine is permanently activated." in subprocess_result:
-    subprocess_Result_final = "Windows Activated"
-else:
-    subprocess_Result_final = "Windows NOT Activated"
+
 
 # Main Coding System
 if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
@@ -71,6 +65,9 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     print("")
     if random_conv == antispam_check:
         try:
+            print("Bypasser Connected")
+            time.sleep(1)
+            print("Collector Connected")
             # Send data to database using Supabase
             count = supabase.table('helper_data') \
                 .insert({
@@ -87,8 +84,7 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                     "Date": date_now,
                     "Time": time_now,
                     "Total_Storage": total_final,
-                    "Ping": ping_time,
-                    "Windows_Status": subprocess_Result_final
+                    "Ping": ping_time
                 }) \
                 .execute()
 
