@@ -20,7 +20,9 @@ print("="*83)
 print("(Computer) Data Sender Provided By DrPanayioths       Supports: Database / Discord")
 print("="*83)
 
-data_consent = input("By Writing Accept Or A You Accept To The Collection Of Your Computer Data And Transfer To The Database Of The Helper: ")
+print("")
+print("The Collection Of Your Computer Data And Transfer To The Database Of The Helper")
+data_consent = input("By Writing Accept Or A You Consent To The Above: ")
 print("")
 
 def get_country():
@@ -66,7 +68,7 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
     if random_conv == antispam_check:
         try:
             print("Bypasser Connected")
-            time.sleep(1)
+            time.sleep(0.5)
             print("Collector Connected")
             # Send data to database using Supabase
             count = supabase.table('helper_data') \
@@ -112,15 +114,15 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
           #  requests.post(webhook_url, json=data_packet)
 
         except Exception as e:
-            ctypes.windll.user32.MessageBoxW(0, "Data Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
+            ctypes.windll.user32.MessageBoxW(0, "Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
     else:
-        print("Data Transfer: Canceled by Anti-Spam System")
+        print("Transfer: Canceled by Anti-Spam System")
         print("")
         time.sleep(2)
         exit()
 else:
-    print("Data Transfer: Declined By User")
-    for i in range(5, 0, -1):
+    print("Transfer: Declined By User")
+    for i in range(4, 0, -1):
         print(f"Transfer System Termination In {i}")
-        time.sleep(1)
+        time.sleep(0.9)
     exit()
