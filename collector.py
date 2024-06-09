@@ -10,6 +10,7 @@ import secrets
 import os
 import requests
 import ping3
+import WinTmp
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -22,7 +23,7 @@ print("="*83)
 
 print("")
 print("The Collection Of Your Computer Data And Transfer To The Database Of The Helper")
-data_consent = input("By Writing Accept Or A You Consent To The Above: ")
+data_consent = input("By Writing CONSENT OR C You Consent To The Above: ")
 print("")
 
 def get_country():
@@ -58,10 +59,12 @@ random_total = random_antispam_1 + random_antispam_2
 random_conv = str(random_total)
 total_storage = round(sum(psutil.disk_usage(p.mountpoint).total for p in psutil.disk_partitions()) / (1024**3), 2) 
 total_final = str(total_storage) + " GB"
+CPU_Tempature =  str(WinTmp.CPU_Temp()) + " C"
+GPU_Tempature =  str(WinTmp.GPU_Temp()) + " C"
 
 
 # Main Coding System
-if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
+if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
     # Anti-Spam Check
     antispam_check = input("What " + str(random_antispam_1) + " + " + str(random_antispam_2) + " Making (For Verification Reasons): ")
     print("")
@@ -79,6 +82,8 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                     "DeviceName": platdata.node,
                     "WindowsVersion": platdata.release,
                     "CPU_DATA": platdata.processor,
+                    "CPU_Tempature": CPU_Tempature,
+                    "GPU_Tempature": GPU_Tempature,                  
                     "Ram_Total": get_size(ram.total),
                     "Ram_Used": get_size(ram.used),
                     "Country": country,
@@ -87,6 +92,7 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
                     "Time": time_now,
                     "Total_Storage": total_final,
                     "Ping": ping_time
+                    
                 }) \
                 .execute()
 
@@ -106,6 +112,8 @@ if data_consent.upper() == "ACCEPT" or data_consent.upper() == "A":
           #                  f"**Device Name**: {platdata.node}\n"
           #                  f"**WindowsVersion**: {platdata.release}\n"
           #                  f"**CPU information's**: {platdata.processor}\n"
+          #                  f"**CPU_Tempature**: {CPU_Tempature}\n"
+          #                  f"**GPU_Tempature**: {GPU_Tempature}\n"        
           #                  f"**ISP**: {isp}\n"
           #                  f"**Date**: {date_now}\n"
           #                  f"**Time**: {time_now}\n"
