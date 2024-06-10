@@ -2,4 +2,4 @@ psutil
 supabase
 requests
 ping3
-wintmp
+WinTmp

@@ -11,6 +11,7 @@ import os
 import requests
 import ping3
 import WinTmp
+import GPUtil
 
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
@@ -61,6 +62,9 @@ total_storage = round(sum(psutil.disk_usage(p.mountpoint).total for p in psutil.
 total_final = str(total_storage) + " GB"
 CPU_Tempature =  str(WinTmp.CPU_Temp()) + " C"
 GPU_Tempature =  str(WinTmp.GPU_Temp()) + " C"
+GPU_Ref = GPUtil.getGPUs()
+GPU_List = [gpu.name for gpu in GPU_Ref]
+GPU_Name = ' '.join(GPU_List)
 
 
 # Main Coding System
@@ -82,6 +86,7 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                     "DeviceName": platdata.node,
                     "WindowsVersion": platdata.release,
                     "CPU_DATA": platdata.processor,
+                    "GPU_Model": GPU_Name,                    
                     "CPU_Tempature": CPU_Tempature,
                     "GPU_Tempature": GPU_Tempature,                  
                     "Ram_Total": get_size(ram.total),
@@ -112,6 +117,7 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
           #                  f"**Device Name**: {platdata.node}\n"
           #                  f"**WindowsVersion**: {platdata.release}\n"
           #                  f"**CPU information's**: {platdata.processor}\n"
+          #                  f"**GPU Name:**: {GPU_Name}\n"          
           #                  f"**CPU_Tempature**: {CPU_Tempature}\n"
           #                  f"**GPU_Tempature**: {GPU_Tempature}\n"        
           #                  f"**ISP**: {isp}\n"
