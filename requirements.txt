@@ -3,3 +3,4 @@ supabase
 requests
 ping3
 WinTmp
+GPUtil

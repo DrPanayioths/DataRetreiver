@@ -13,17 +13,21 @@ import ping3
 import WinTmp
 import GPUtil
 
+
+
+
+
 url: str = "Supabase URL"
 key: str = "Supabase API Key"
 
 supabase: Client = create_client(url, key)
 os.system('color a')
 print("="*83)
-print("(Computer) Data Sender Provided By DrPanayioths       Supports: Database / Discord")
+print("(Computer) Data Sender Provided By DrPanayioths       Supports: Windows 10/11, Linux")
 print("="*83)
 
 print("")
-print("The Collection Of Your Computer Data And Transfer To The Database Of The Helper")
+print("The Collection Of Your Computer Data And Transfer To Supporters Database")
 data_consent = input("By Writing CONSENT OR C You Consent To The Above: ")
 print("")
 
@@ -36,7 +40,7 @@ def get_country():
         return country , isp
     except Exception as e:
         return None
-
+    
 def get_size(bytes, suffix="B"):
     factor = 1024
     for unit in ["", "K", "M", "G", "T", "P"]:
@@ -50,7 +54,7 @@ ram = psutil.virtual_memory()
 random_str = str(random_number)
 password_final = secrets.choice(string.ascii_uppercase) + secrets.choice(string.ascii_lowercase) + secrets.choice(string.ascii_letters) + str(random.randrange(0,9999))
 country , isp = get_country()
-date_now = datetime.now().strftime('%d-%m-%Y ')
+date_now = datetime.now().strftime('%d-%m-%Y')
 time_now = datetime.now().strftime('%H:%M:%S')
 ping_time = round(ping3.ping("google.com") * 1000, 2)
 
@@ -65,7 +69,6 @@ GPU_Tempature =  str(WinTmp.GPU_Temp()) + " C"
 GPU_Ref = GPUtil.getGPUs()
 GPU_List = [gpu.name for gpu in GPU_Ref]
 GPU_Name = ' '.join(GPU_List)
-
 
 # Main Coding System
 if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
@@ -86,9 +89,9 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                     "DeviceName": platdata.node,
                     "WindowsVersion": platdata.release,
                     "CPU_DATA": platdata.processor,
-                    "GPU_Model": GPU_Name,                    
+                    "GPU_Model": GPU_Name,
                     "CPU_Tempature": CPU_Tempature,
-                    "GPU_Tempature": GPU_Tempature,                  
+                    "GPU_Tempature": GPU_Tempature,                    
                     "Ram_Total": get_size(ram.total),
                     "Ram_Used": get_size(ram.used),
                     "Country": country,
@@ -96,8 +99,7 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                     "Date": date_now,
                     "Time": time_now,
                     "Total_Storage": total_final,
-                    "Ping": ping_time
-                    
+                    "Ping": ping_time  
                 }) \
                 .execute()
 
@@ -106,29 +108,9 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
             print("Data Access Key:", password_final)
             print("")
 
-                      # Send data to Discord webhook
-          #  webhook_url = "https://discord.com/api/webhooks/..."
-          #  data_packet = {
-          #       "content": f"**Device Name**: {platdata.node}\n"
-          #                  f"**Ram Total Capacity**: {get_size(ram.total)}\n"
-          #                  f"**Ram Used**: {get_size(ram.used)}\n"
-          #                  f"**Country**: {country}\n"
-          #                  f"**Operating System**: {platdata.system}\n"
-          #                  f"**Device Name**: {platdata.node}\n"
-          #                  f"**WindowsVersion**: {platdata.release}\n"
-          #                  f"**CPU information's**: {platdata.processor}\n"
-          #                  f"**GPU Name:**: {GPU_Name}\n"          
-          #                  f"**CPU_Tempature**: {CPU_Tempature}\n"
-          #                  f"**GPU_Tempature**: {GPU_Tempature}\n"        
-          #                  f"**ISP**: {isp}\n"
-          #                  f"**Date**: {date_now}\n"
-          #                  f"**Time**: {time_now}\n"
-          #                  f"**Ping**: {ping_time}"  
-          #   }
-          #  requests.post(webhook_url, json=data_packet)
-
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, "Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
+            print("Error:", e)
     else:
         print("Transfer: Canceled by Anti-Spam System")
         print("")
@@ -140,3 +122,7 @@ else:
         print(f"Transfer System Termination In {i}")
         time.sleep(0.9)
     exit()
+
+
+
+
