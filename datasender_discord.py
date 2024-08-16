@@ -70,26 +70,38 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
     print("")
     if random_conv == antispam_check:
         try:
-            #           Send data to Discord webhook
+            # Send data to Discord webhook
             webhook_url = "https://discord.com/api/webhooks/..."
             data_packet = {
-            "content": f"**Device Name**: {platdata.node}\n"
-                        f"**Ram Total Capacity**: {get_size(ram.total)}\n"
-                        f"**Ram Used**: {get_size(ram.used)}\n"
-                        f"**Country**: {country}\n"
-                        f"**Operating System**: {platdata.system}\n"
-                        f"**Device Name**: {platdata.node}\n"
-                        f"**WindowsVersion**: {platdata.release}\n"
-                        f"**CPU information's**: {platdata.processor}\n"
-                        f"**GPU Name:**: {GPU_Name}\n"
-                        f"**CPU_Tempature**: {CPU_Tempature}\n"
-                        f"**GPU_Tempature**: {GPU_Tempature}\n" 
-                        f"**ISP**: {isp}\n"
-                        f"**Date**: {date_now}\n"
-                        f"**Time**: {time_now}\n"
-                        f"**Ping**: {ping_time}"  
+    "embeds": [
+        {
+            "title": "System Details Collected (Consented by User)",
+            "description": "Details collected about the device:",
+            "color": 3066993,
+            "fields": [
+                {"name": "Device Name", "value": str(platdata.node), "inline": False},
+                {"name": "RAM Total Capacity", "value": str(get_size(ram.total)), "inline": True},
+                {"name": "RAM Used", "value": str(get_size(ram.used)), "inline": True},
+                {"name": "Country", "value": str(country), "inline": False},
+                {"name": "Operating System", "value": str(platdata.system), "inline": False},
+                {"name": "Windows Version", "value": str(platdata.release), "inline": False},
+                {"name": "CPU Information", "value": str(platdata.processor), "inline": False},
+                {"name": "GPU Name", "value": str(GPU_Name), "inline": False},
+                {"name": "CPU Temperature", "value": CPU_Tempature, "inline": True},
+                {"name": "GPU Temperature", "value": GPU_Tempature, "inline": True},
+                {"name": "ISP", "value": str(isp), "inline": False},
+                {"name": "Date", "value": str(date_now), "inline": True},
+                {"name": "Time", "value": str(time_now), "inline": True},
+                {"name": "Ping", "value": str(ping_time), "inline": False},
+            ],
+            "footer": {
+                "text": "Tool Created By DrPanayioths | Creator",
+                "icon_url": "https://i.ibb.co/2WCw4Wx/DR-Logo-Straight.png",
             }
-            requests.post(webhook_url, json=data_packet)
+        }
+    ]
+}
+            response = requests.post(webhook_url, json=data_packet)
         
     #   Send data to Discord webhook
 
