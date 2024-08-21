@@ -12,7 +12,7 @@ import requests
 import ping3
 import WinTmp
 import GPUtil
-
+import sys
 
 
 
@@ -70,6 +70,17 @@ GPU_Ref = GPUtil.getGPUs()
 GPU_List = [gpu.name for gpu in GPU_Ref]
 GPU_Name = ' '.join(GPU_List)
 
+version_info = sys.getwindowsversion()
+if version_info.build >= 7600 and version_info.build < 7601:
+    win_version = "Windows 7"
+elif version_info.build >= 10240 and version_info.build < 22000:
+    win_version = "Windows 10"
+elif version_info.build >= 22000:
+    win_version = "Windows 11"
+else:
+    win_version = "Non Supported Version"
+
+
 # Main Coding System
 if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
     # Anti-Spam Check
@@ -87,7 +98,7 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                     "security_code": password_final,
                     "OperatingSYS": platdata.system,
                     "DeviceName": platdata.node,
-                    "WindowsVersion": platdata.release,
+                    "WindowsVersion": win_version,
                     "CPU_DATA": platdata.processor,
                     "GPU_Model": GPU_Name,
                     "CPU_Tempature": CPU_Tempature,
