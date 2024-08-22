@@ -62,6 +62,7 @@ GPU_Tempature =  str(WinTmp.GPU_Temp()) + " C"
 GPU_Ref = GPUtil.getGPUs()
 GPU_List = [gpu.name for gpu in GPU_Ref]
 GPU_Name = ' '.join(GPU_List)
+logged_user = os.getlogin()
 
 version_info = sys.getwindowsversion()
 if version_info.build >= 7600 and version_info.build < 7601:
@@ -104,6 +105,8 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                 {"name": "Date", "value": str(date_now), "inline": True},
                 {"name": "Time", "value": str(time_now), "inline": True},
                 {"name": "Ping", "value": str(ping_time), "inline": False},
+                {"name": "Logged User", "value": str(logged_user), "inline": True},
+                {"name": "Total Storage", "value": str(total_final), "inline": True}
             ],
             "footer": {
                 "text": "Tool Created By DrPanayioths | Creator",
