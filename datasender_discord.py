@@ -10,7 +10,8 @@ import ping3
 import WinTmp
 import GPUtil
 import sys
-
+import math
+import speedtest
 
 
 
@@ -63,6 +64,11 @@ GPU_Ref = GPUtil.getGPUs()
 GPU_List = [gpu.name for gpu in GPU_Ref]
 GPU_Name = ' '.join(GPU_List)
 logged_user = os.getlogin()
+speed = speedtest.Speedtest()
+download_speed = speed.download() / (1024**2)
+upload_speed = math.trunc(speed.upload() / (1024**2))
+download_final = round(download_speed, 2)
+upload_final = round(upload_speed, 2)
 
 version_info = sys.getwindowsversion()
 if version_info.build >= 7600 and version_info.build < 7601:
@@ -106,10 +112,12 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                 {"name": "Time", "value": str(time_now), "inline": True},
                 {"name": "Ping", "value": str(ping_time), "inline": False},
                 {"name": "Logged User", "value": str(logged_user), "inline": True},
-                {"name": "Total Storage", "value": str(total_final), "inline": True}
+                {"name": "Total Storage", "value": str(total_final), "inline": True},
+                {"name": "Download Speed", "value": str(download_final) + " MB/s", "inline": False},
+                {"name": "Upload Speed", "value": str(upload_final) + " MB/s", "inline": True}
             ],
             "footer": {
-                "text": "Tool Created By DrPanayioths | Creator",
+                "text": "| Tool Created By DrPanayioths |",
                 "icon_url": "https://i.ibb.co/2WCw4Wx/DR-Logo-Straight.png",
             }
         }

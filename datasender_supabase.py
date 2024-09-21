@@ -13,6 +13,8 @@ import ping3
 import WinTmp
 import GPUtil
 import sys
+import math
+import speedtest
 
 
 
@@ -70,6 +72,11 @@ GPU_Ref = GPUtil.getGPUs()
 GPU_List = [gpu.name for gpu in GPU_Ref]
 GPU_Name = ' '.join(GPU_List)
 logged_user = os.getlogin()
+speed = speedtest.Speedtest()
+download_speed = speed.download() / (1024**2)
+upload_speed = math.trunc(speed.upload() / (1024**2))
+download_final = round(download_speed, 2)
+upload_final = round(upload_speed, 2)
 
 version_info = sys.getwindowsversion()
 if version_info.build >= 7600 and version_info.build < 7601:
@@ -112,7 +119,9 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
                     "Time": time_now,
                     "Total_Storage": total_final,
                     "Ping": ping_time,
-                    "Logged_user": logged_user
+                    "Logged_user": logged_user,
+                    "Download_Speed": download_final,
+                    "Upload_Speed": upload_final
                 }) \
                 .execute()
 
@@ -122,7 +131,7 @@ if data_consent.upper() == "CONSENT" or data_consent.upper() == "C":
             print("")
 
         except Exception as e:
-            ctypes.windll.user32.MessageBoxW(0, "Transfer Status: Unsuccessful Transfer", "DRP Data Transferer", 0x30)
+            ctypes.windll.user32.MessageBoxW(0, "Transfer Status: Unsuccessful Transfer", "Data Transferer", 0x30)
             print("Error:", e)
     else:
         print("Transfer: Canceled by Anti-Spam System")

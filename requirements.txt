@@ -4,3 +4,4 @@ requests
 ping3
 WinTmp
 GPUtil
+speedtest-cli
