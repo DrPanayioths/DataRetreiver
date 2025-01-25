@@ -27,7 +27,7 @@ print("")
 print("The Collection Of Your Computer Data And Post In The Discord Server Of The Supporter")
 data_consent = input("By Writing CONSENT OR C You Consent To The Above: ")
 print("")
-print("Collecting Infromations (May Take Some Time)")
+print("Collecting Informations (May Take Some Time)")
 
 def get_country():
     try:
